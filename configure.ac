@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with systemd; If not, see <http://www.gnu.org/licenses/>.
 
-AC_PREREQ(2.63)
+AC_PREREQ([2.71])
 
 AC_INIT([systemd-ui],[3],[systemd-devel@lists.freedesktop.org])
 AC_CONFIG_SRCDIR([src/systemadm.vala])
@@ -34,7 +34,6 @@ AC_PROG_LN_S
 AC_PROG_SED
 AC_PROG_AWK
 AC_PROG_CC
-AC_PROG_CC_C99
 AM_PROG_CC_C_O
 AC_PROG_GCC_TRADITIONAL
 
