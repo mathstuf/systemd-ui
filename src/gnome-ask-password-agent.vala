@@ -236,7 +236,23 @@ class Application : Gtk.Application {
                         if (xdg_runtime_dir == null) {
                                 show_error("no user XDG runtime directory");
                         } else {
-                                user_watch = add_watch("user", (!) xdg_runtime_dir + "/systemd/ask-password/");
+                                string ask_pass_dir = (!) xdg_runtime_dir + "/systemd/ask-password/";
+                                bool ok = true;
+                                if (!FileUtils.test(ask_pass_dir, FileTest.IS_DIR)) {
+                                        File ask_pass_dir_file = File.new_for_path(ask_pass_dir);
+                                        try {
+                                                if (!ask_pass_dir_file.make_directory_with_parents()) {
+                                                        show_error("failed to create user directory");
+                                                        ok = false;
+                                                }
+                                        } catch (GLib.Error e) {
+                                                show_error("failed to create user directory %s: %s".printf(ask_pass_dir, e.message));
+                                                ok = false;
+                                        }
+                                }
+                                if (ok) {
+                                        user_watch = add_watch("user", ask_pass_dir);
+                                }
                         }
                 }
 
